@@ -9,19 +9,24 @@
 #include "trabajoMascotas.h"
 
 #define TAM_MASCOTAS 8
-#define TAM_TIPO 5
-#define TAM_COLOR 5
+#define INICIO_ID 100
+#define TAM_TIPOS 5
+#define TAM_COLORES 5
 #define TAM_SERVICIOS 3
 
 int main(void) {
 
 	setbuf(stdout, NULL);
 
-	int proximoId = 1000;
+	int proximoId = INICIO_ID;
 
 	eDatosMascotas lista[TAM_MASCOTAS];
 
-	eTipoMascotas tipos[TAM_TIPO] =
+	inicializarMascotas(lista, TAM_MASCOTAS);
+
+	proximoId = harcodeo(lista, TAM_MASCOTAS, INICIO_ID);
+
+	eTipoMascotas tipos[TAM_TIPOS] =
 	{
 		{1000, "Ave" },
 		{1001, "Perro" },
@@ -30,7 +35,7 @@ int main(void) {
 		{1004, "Pez" }
 	};
 
-	eColorMascotas color[TAM_COLOR] =
+	eColorMascotas colores[TAM_COLORES] =
 	{
 		{5000, "Negro" },
 		{5001, "Blanco" },
@@ -55,7 +60,7 @@ int main(void) {
 		switch(menuPrincipal())
 		{
 			case 1:
-				if(altaMascota(lista, TAM_MASCOTAS, tipos, TAM_TIPO, color, TAM_COLOR, &proximoId))
+				if(altaMascota(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES, &proximoId))
 				{
 					printf("Mascota cargada con exito.\n");
 				}
@@ -69,29 +74,21 @@ int main(void) {
 				switch(menuModificacion())
 				{
 					case 1:
-						if(modificarTipo())
-						{
-							printf("Tipo modificado con exito.\n");
-						}
-						else
-						{
-							printf("No se pudo modificar el tipo.\n");
-						}
+						listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+						modificarTipo(lista, TAM_MASCOTAS, tipos, TAM_TIPOS);
+						printf("Tipo modificado con exito.\n");
+
 						break;
 
 					case 2:
-						if(modificarVacunacion())
-						{
-							printf("Vacunacion modificada con exito.\n");
-						}
-						else
-						{
-							printf("No se pudo modificar la vacunacion.\n");
-						}
-						break;
+						listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+						modificarVacunacion(lista, TAM_MASCOTAS);
+						printf("Vacunacion modificada con exito.\n");
 
+						break;
 					default:
 						printf("Opcion invalida.\n");
+						break;
 				}
 
 				break;
@@ -101,19 +98,19 @@ int main(void) {
 				break;
 
 			case 4:
-				printf("4");
+				listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
 				break;
 
 			case 5:
-				printf("5");
+				listarTipos(tipos, TAM_TIPOS);
 				break;
 
 			case 6:
-				printf("6");
+				listarColores(colores, TAM_COLORES);
 				break;
 
 			case 7:
-				printf("7");
+				listarServicios(servicios, TAM_SERVICIOS);
 				break;
 
 			case 8:
@@ -126,7 +123,11 @@ int main(void) {
 
 			default:
 				printf("Opcion invalida.\n");
+				break;
 		}
+
+		system("pause");
+		system("cls");
 
 	}while(salir != 's');
 
