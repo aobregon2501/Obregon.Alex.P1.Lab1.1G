@@ -7,6 +7,7 @@
 #include "datosMascotas.h"
 #include "serviciosMascotas.h"
 #include "trabajoMascotas.h"
+#include "validacionesMascotas.h"
 
 #define TAM_MASCOTAS 8
 #define ID_MASCOTAS 6000
@@ -73,6 +74,8 @@ int main(void) {
 				{
 					printf("No se pudo cargar la mascota.\n");
 				}
+				system("pause");
+				system("cls");
 				break;
 
 			case 2:
@@ -102,6 +105,8 @@ int main(void) {
 				{
 					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
 				}
+				system("pause");
+				system("cls");
 				break;
 
 			case 3:
@@ -113,22 +118,32 @@ int main(void) {
 				{
 					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
 				}
+				system("pause");
+				system("cls");
 				break;
 
 			case 4:
 				listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+				system("pause");
+				system("cls");
 				break;
 
 			case 5:
 				listarTipos(tipos, TAM_TIPOS);
+				system("pause");
+				system("cls");
 				break;
 
 			case 6:
 				listarColores(colores, TAM_COLORES);
+				system("pause");
+				system("cls");
 				break;
 
 			case 7:
 				listarServicios(servicios, TAM_SERVICIOS);
+				system("pause");
+				system("cls");
 				break;
 
 			case 8:
@@ -140,7 +155,8 @@ int main(void) {
 				{
 					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
 				}
-				printf("8");
+				system("pause");
+				system("cls");
 				break;
 
 			case 9:
@@ -152,16 +168,20 @@ int main(void) {
 				{
 					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
 				}
-				printf("9");
+				system("pause");
+				system("cls");
+				break;
+			case 10:
+				salir = 's';
+				printf("Programa finalizado.\n");
 				break;
 
 			default:
 				printf("Opcion invalida.\n");
+				system("pause");
+				system("cls");
 				break;
 		}
-
-		system("pause");
-		system("cls");
 
 	}while(salir != 's');
 

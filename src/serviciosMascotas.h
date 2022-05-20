@@ -15,3 +15,7 @@ typedef struct{
 }eServiciosMascotas;
 
 #endif /* SERVICIOSMASCOTAS_H_ */
+
+int listarServicios(eServiciosMascotas servicio[], int tamServicio);
+int validarServicios(eServiciosMascotas vec[], int tamServicio, int id);
+int buscarServicio(eServiciosMascotas vec[], int tamServicio, int id, int* pIndex);
