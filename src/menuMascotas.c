@@ -12,7 +12,6 @@
 int menuPrincipal()
 {
 	int opcion;
-	int opcionValida;
 
 	system("cls");
 	printf("1. Alta mascota\n");
@@ -25,15 +24,8 @@ int menuPrincipal()
 	printf("8. Alta trabajo\n");
 	printf("9. Listar trabajos\n");
 
-	printf("Ingrese opción: ");
-	opcionValida = scanf("%d", &opcion);
-
-	if(opcionValida == 0)
-	{
-		opcion = 0;
-	}
-
-	fflush(stdin);
+	printf("Ingrese opcion: ");
+	opcion = validarEntero();
 
 	return opcion;
 }
@@ -41,21 +33,13 @@ int menuPrincipal()
 int menuModificacion()
 {
 	int opcion;
-	int opcionValida;
 
 	system("cls");
 	printf("1. Modificar tipo.\n");
 	printf("2. Modificar estado de vacunacion.\n");
 
-	printf("Ingrese opción: ");
-	opcionValida = scanf("%d", &opcion);
-
-	if(opcionValida == 0)
-	{
-		opcion = 0;
-	}
-
-	fflush(stdin);
+	printf("Ingrese opcion: ");
+	opcion = validarEntero();
 
 	return opcion;
 }

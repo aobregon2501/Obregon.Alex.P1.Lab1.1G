@@ -9,22 +9,27 @@
 #include "trabajoMascotas.h"
 
 #define TAM_MASCOTAS 8
-#define INICIO_ID 100
+#define ID_MASCOTAS 6000
 #define TAM_TIPOS 5
 #define TAM_COLORES 5
 #define TAM_SERVICIOS 3
+#define TAM_TRABAJOS 20
+#define ID_TRABAJOS 13000
 
 int main(void) {
 
 	setbuf(stdout, NULL);
 
-	int proximoId = INICIO_ID;
+	int proximoId = ID_MASCOTAS;
+	int proximoIdTrabajo = ID_TRABAJOS;
+	int cantidadTrabajos = 0;
+	int flagIngreso = 0;
 
 	eDatosMascotas lista[TAM_MASCOTAS];
-
 	inicializarMascotas(lista, TAM_MASCOTAS);
+	harcodeo(lista, TAM_MASCOTAS, &proximoId, &flagIngreso);
 
-	proximoId = harcodeo(lista, TAM_MASCOTAS, INICIO_ID);
+	eTrabajoMascotas trabajos[TAM_TRABAJOS];
 
 	eTipoMascotas tipos[TAM_TIPOS] =
 	{
@@ -60,7 +65,7 @@ int main(void) {
 		switch(menuPrincipal())
 		{
 			case 1:
-				if(altaMascota(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES, &proximoId))
+				if(altaMascota(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES, &proximoId, &flagIngreso))
 				{
 					printf("Mascota cargada con exito.\n");
 				}
@@ -71,30 +76,43 @@ int main(void) {
 				break;
 
 			case 2:
-				switch(menuModificacion())
+				if(flagIngreso)
 				{
-					case 1:
-						listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
-						modificarTipo(lista, TAM_MASCOTAS, tipos, TAM_TIPOS);
-						printf("Tipo modificado con exito.\n");
+					switch(menuModificacion())
+					{
+						case 1:
+							listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+							modificarTipo(lista, TAM_MASCOTAS, tipos, TAM_TIPOS);
+							printf("Tipo modificado con exito.\n");
 
-						break;
+							break;
 
-					case 2:
-						listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
-						modificarVacunacion(lista, TAM_MASCOTAS);
-						printf("Vacunacion modificada con exito.\n");
+						case 2:
+							listarMascotas(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+							modificarVacunacion(lista, TAM_MASCOTAS);
+							printf("Vacunacion modificada con exito.\n");
 
-						break;
-					default:
-						printf("Opcion invalida.\n");
-						break;
+							break;
+						default:
+							printf("Opcion invalida.\n");
+							break;
+					}
 				}
-
+				else
+				{
+					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
+				}
 				break;
 
 			case 3:
-				printf("3");
+				if(flagIngreso)
+				{
+					bajaMascota(lista, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
+				}
+				else
+				{
+					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
+				}
 				break;
 
 			case 4:
@@ -114,10 +132,26 @@ int main(void) {
 				break;
 
 			case 8:
+				if(flagIngreso)
+				{
+					altaTrabajos(trabajos, TAM_TRABAJOS, &cantidadTrabajos, lista, servicios, &proximoIdTrabajo);
+				}
+				else
+				{
+					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
+				}
 				printf("8");
 				break;
 
 			case 9:
+				if(flagIngreso)
+				{
+
+				}
+				else
+				{
+					printf("No se puede utilizar la opcion sin realizar al menos un Alta mascota.\n");
+				}
 				printf("9");
 				break;
 

@@ -26,26 +26,36 @@ int inicializarMascotas(eDatosMascotas vec[], int tam)
 	return todoOk;
 }
 
-int harcodeo(eDatosMascotas vec[], int tam, int prox)
+int harcodeo(eDatosMascotas vec[], int tam, int* pNextId, int* flagIngreso)
 {
+	int todoOk;
+
 	eDatosMascotas hardc[5] =
 	{
-		{prox, "Rodolfo", 1004, 5003, 300, 'n', 0},//pez
-		{prox + 1, "Zuri", 1000, 5000, 4, 'n', 0},//ave
-		{prox + 2, "Cuchi", 1002, 5001, 12, 's', 0},//roedor
-		{prox + 3, "Iri", 1000, 5000, 4, 'n', 0},//ave
-		{prox + 4, "Jose", 1000, 5004, 15, 's', 0}//ave
+		{0, "Rodolfo", 1004, 5003, 300, 'n', 0},//pez
+		{0, "Zuri", 1000, 5000, 4, 'n', 0},//ave
+		{0, "Cuchi", 1002, 5001, 12, 's', 0},//roedor
+		{0, "Iri", 1000, 5000, 4, 'n', 0},//ave
+		{0, "Jose", 1000, 5004, 15, 's', 0}//ave
 	};
 
-	for(int i = 0; i < 5; i++)
+	if(vec != NULL && pNextId != NULL && tam > 0)
 	{
-		vec[i] = hardc[i];
+		for(int i = 0; i < 5; i++)
+		{
+			vec[i] = hardc[i];
+			vec[i].id = *pNextId;
+			(*pNextId)++;
+		}
+		todoOk = 1;
 	}
 
-	return prox + 5;
+	*flagIngreso = 1;
+
+	return todoOk;
 }
 
-int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTipos, eColorMascotas color[], int tamColor, int* pNextId)
+int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTipos, eColorMascotas color[], int tamColor, int* pNextId, int* flagIngreso)
 {
 	int todoOk = 0;
 	int indice;
@@ -77,12 +87,12 @@ int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTip
 			listarTipos(tipos, tamTipos);
 
 			printf("Ingrese el id del tipo: ");
-			scanf("%d", &idTipo);
+			idTipo = validarEntero();
 
 			while(!validarTipo(tipos, tamTipos, idTipo) )
 			{
 				printf("Id invalido. Reingrese id del tipo: ");
-				scanf("%d", &idTipo);
+				idTipo = validarEntero();
 			}
 
 			nuevaMascota.idTipo = idTipo;
@@ -92,12 +102,12 @@ int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTip
 			listarColores(color, tamColor);
 
 			printf("Ingrese el id del color: ");
-			scanf("%d", &idColor);
+			idColor = validarEntero();
 
 			while( !validarColores(color, tamColor, idColor) )
 			{
 				printf("Id invalido. Reingrese id del color: ");
-				scanf("%d", &idColor);
+				idColor = validarEntero();
 			}
 
 			nuevaMascota.idColor = idColor;
@@ -105,12 +115,12 @@ int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTip
 			system("cls");
 
 			printf("Ingrese edad: ");
-			scanf("%d", &edad);
+			edad = validarEntero();
 
 			while(edad < 0)
 			{
 				printf("Edad invalida. Reingrese edad: ");
-				scanf("%d", &edad);
+				edad = validarEntero();
 			}
 
 			nuevaMascota.edad = edad;
@@ -138,6 +148,8 @@ int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTip
 
 			(*pNextId)++;
 
+			*flagIngreso = 1;
+
 			todoOk = 1;
 		}
 	}
@@ -148,7 +160,6 @@ int altaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipos[], int tamTip
 
 int buscarLibre(eDatosMascotas vec[], int tam, int* pIndex)
 {
-
     int todoOk = 0;
     if( vec != NULL && pIndex != NULL && tam > 0)
     {
@@ -226,16 +237,19 @@ int listarServicios(eServiciosMascotas servicio[], int tamServicio)
 	return todoOk;
 }
 
-int validarTipo(eTipoMascotas vec[], int tamTipo, int id){
- int esValido = 0;
- int indice;
+int validarTipo(eTipoMascotas vec[], int tamTipo, int id)
+{
+	int esValido = 0;
+	int indice;
 
- if (buscarTipo(vec, tamTipo, id, &indice) ){
-    if(indice != -1){
-        esValido = 1;
-    }
- }
- return esValido;
+	if (buscarTipo(vec, tamTipo, id, &indice) )
+	{
+		if(indice != -1)
+		{
+			esValido = 1;
+		}
+	}
+	return esValido;
 }
 
 int buscarTipo(eTipoMascotas vec[], int tamTipo, int id, int* pIndex)
@@ -295,23 +309,23 @@ void modificarTipo(eDatosMascotas vec[], int tam, eTipoMascotas tipo[], int tamT
 
 	printf("Ingrse id de la mascota a modificar: ");
 
-	scanf("%d", &id);
+	id = validarEntero();
 
 	while(!validarMascota(vec, tam, id))
 	{
 		printf("Id invalido. Reingrese id: ");
-		scanf("%d", &id);
+		id = validarEntero();
 	}
 
 	listarTipos(tipo, tamTipo);
 
 	printf("Ingrese el id del tipo: ");
-	scanf("%d", &idTipo);
+	idTipo = validarEntero();
 
 	while(!validarTipo(tipo, tamTipo, idTipo) )
 	{
 		printf("Id invalido. Reingrese id del tipo: ");
-		scanf("%d", &idTipo);
+		idTipo = validarEntero();
 	}
 
 	for(int i = 0; i < tam; i++)
@@ -331,12 +345,12 @@ void modificarVacunacion(eDatosMascotas vec[], int tam)
 
 	printf("Ingrse id de la mascota a modificar: ");
 
-	scanf("%d", &id);
+	id = validarEntero();
 
 	while(!validarMascota(vec, tam, id))
 	{
 		printf("Id invalido. Reingrese id: ");
-		scanf("%d", &id);
+		id = validarEntero();
 	}
 
 	printf("Ingrese vacunacion('s' o 'n'): ");
@@ -410,6 +424,24 @@ void mostrarMascotaFila(eDatosMascotas emp, eTipoMascotas tipos[], int tamTipo, 
           );
 }
 
+
+void mostrarMascota(eDatosMascotas emp, eTipoMascotas tipos[], int tamTipo, eColorMascotas colores[], int tamColor)
+{
+	char descripcionTipo[20];
+	char descripcionColor[20];
+	char descripcionVacuna[20];
+
+	cargarDescripcionTipo(tipos, tamTipo, emp.idTipo, descripcionTipo);
+	cargarDescripcionColor(colores, tamColor, emp.idColor, descripcionColor);
+	cargarDescripcionVacuna(emp.vacunado, descripcionVacuna);
+
+	printf("Id: %d\n", emp.id);
+	printf("Nombre: %s\n", emp.nombre);
+	printf("Tipo: %s\n", descripcionTipo);
+	printf("Color: %s\n", descripcionColor);
+	printf("Edad: %d\n", emp.edad);
+	printf("Vacunacion: %s\n\n", descripcionVacuna);
+}
 
 
 int validarMascota(eDatosMascotas vec[], int tam, int id){
@@ -557,3 +589,195 @@ void ordenarLista(eDatosMascotas vec[], int tam, eTipoMascotas tipo[], int tamTi
 	}
 }
 
+
+int bajaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipo[], int tamTipo, eColorMascotas colores[], int tamColores)
+{
+	int todoOk = 0;
+	int indice;
+	int id;
+	char confirma;
+	if( vec != NULL && tam > 0)
+	{
+		listarMascotas(vec, tam, tipo, tamTipo, colores, tamColores);
+		printf("Ingrese id: ");
+		id = validarEntero();
+
+		if(buscarMascota(vec, tam, id, &indice))
+		{
+			if(indice == -1)
+			{
+				printf("No existe una mascota con id: %d en el sistema.\n", id);
+			}
+			else
+			{
+				mostrarMascota(vec[indice], tipo, tamTipo, colores, tamColores);
+				printf("Confirma baja?: ");
+				fflush(stdin);
+				scanf("%c", &confirma);
+
+				if(confirma == 's' || confirma == 'S')
+				{
+					vec[indice].isEmpty = 1;
+					printf("Baja exitosa.\n");
+				}
+				else
+				{
+					printf("Baja cancelada por el usuario.\n");
+				}
+
+			}
+
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+
+int validarEntero()
+{
+	int ingresoValido;
+	int numeroInt;
+
+	fflush(stdin);
+	ingresoValido = scanf("%d", &numeroInt);
+
+	while(!ingresoValido || numeroInt <= 0)
+	{
+		printf("Ingreso invalido, vuelva a ingresar el numero: ");
+		fflush(stdin);
+		ingresoValido = scanf("%d", &numeroInt);
+	}
+
+	return numeroInt;
+}
+
+
+int altaTrabajos(eTrabajoMascotas trabajos[],int tamTrabajos, int* cantidadTrabajos, eDatosMascotas vec[], eServiciosMascotas servicio[], int tamServicios, int* pNextId, int tam, eTipoMascotas tipos[], int tamTipo, eColorMascotas colores[], int tamColor)
+{
+	int todoOk = 0;
+	int indice;
+	int idMascota;
+	int idServicio;
+	eFechaMascotas fecha;
+	eTrabajoMascotas nuevoTrabajo;
+
+	if(vec != NULL && pNextId != NULL && trabajos != NULL && tamTrabajos > 0)
+	{
+		system("cls");
+		printf("    *** Alta Mascota ***\n\n");
+
+		if(*cantidadTabajos == tamTrabajos)
+		{
+			printf("No hay lugar en el sistema\n");
+		}
+		else
+		{
+			nuevoTrabajo.id = *pNextId;
+
+			listarMascotas(vec, tam, tipo, tamTipo, colores, tamColores);
+
+			printf("Ingrese el id de la mascota: ");
+			idMascota = validarEntero();
+
+			while(!validarMascota(vec, tam, idMascota) )
+			{
+				printf("Id invalido. Reingrese id de la mascota: ");
+				idMascota = validarEntero();
+			}
+
+			nuevoTrabajo.idMascota = idMascota;
+
+			system("cls");
+
+			listarServicios(serrvicios, tamServicios);
+
+			printf("Ingrese el id del servicio: ");
+			idServicio = validarEntero();
+
+			while( !validarServicios(servicios, tamServicios, idServicio) )
+			{
+				printf("Id invalido. Reingrese id del servicio: ");
+				idServicio = validarEntero();
+			}
+
+			nuevoTrabajo.idServicio = idServicio;
+
+			system("cls");
+
+			printf("Ingrese edad: ");
+			edad = validarEntero();
+
+			while(edad < 0)
+			{
+				printf("Edad invalida. Reingrese edad: ");
+				edad = validarEntero();
+			}
+
+			nuevaMascota.edad = edad;
+
+			system("cls");
+
+			printf("Ingrese vacunacion('s' o 'n'): ");
+			fflush(stdin);
+			scanf("%c", &vacuna);
+
+			while(vacuna != 's' && vacuna != 'n')
+			{
+				printf("Ingreso no valido. Reingrese vacunacion('s' o 'n'): ");
+				fflush(stdin);
+				scanf("%c", &vacuna);
+			}
+
+			nuevaMascota.vacunado = vacuna;
+
+			system("cls");
+
+			nuevaMascota.isEmpty = 0;
+
+			vec[indice] = nuevaMascota;
+
+			(*pNextId)++;
+
+			*flagIngreso = 1;
+
+			todoOk = 1;
+		}
+	}
+	return todoOk;
+}
+
+
+int validarServicios(eServiciosMascotas vec[], int tamServicio, int id)
+{
+	int esValido = 0;
+	int indice;
+
+	if (buscarServicio(vec, tamServicio, id, &indice) )
+	{
+		if(indice != -1)
+		{
+			esValido = 1;
+		}
+	}
+	return esValido;
+}
+
+int buscarServicio(eServiciosMascotas vec[], int tamServicio, int id, int* pIndex)
+{
+    int todoOk = 0;
+    if( vec != NULL && pIndex != NULL && tamServicio > 0 )
+    {
+        *pIndex = -1;
+        for(int i = 0; i < tamServicio; i++)
+        {
+            if(vec[i].id == id)
+            {
+                *pIndex = i;
+                break;
+            }
+        }
+        todoOk = 1;
+    }
+    return todoOk;
+}
