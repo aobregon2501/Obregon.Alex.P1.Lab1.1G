@@ -53,4 +53,12 @@ void ordenarLista(eDatosMascotas vec[], int tam, eTipoMascotas tipo[], int tamTi
 int listarServicios(eServiciosMascotas servicio[], int tamServicio);
 int bajaMascota(eDatosMascotas vec[], int tam, eTipoMascotas tipo[], int tamTipo, eColorMascotas colores[], int tamColores);
 
+int altaTrabajos(eTrabajoMascotas trabajos[], int tamTrabajos, int* cantidadTrabajos, eDatosMascotas vec[], eServiciosMascotas servicio[], int tamServicios, int* pNextId, int tam, eTipoMascotas tipos[], int tamTipo, eColorMascotas colores[], int tamColor);
+int validarServicios(eServiciosMascotas vec[], int tamServicio, int id);
+int buscarServicio(eServiciosMascotas vec[], int tamServicio, int id, int* pIndex);
+int buscarNombreYServicio(eDatosMascotas vec[], int tam, int idMascota, char nombreT[], eServiciosMascotas servicio[], int tamServicio, int idServicio, char servicioT[], float* precio);
+
+int listarTrabajos(eTrabajoMascotas trabajos[], int cantidadTrabajos, eDatosMascotas vec[], int tam, eServiciosMascotas servicio[], int tamServicios);
+int buscarNombreYServicio(eDatosMascotas vec[], int tam, int idMascota, char nombreT[], eServiciosMascotas servicio[], int tamServicio, int idServicio, char servicioT[], float* precio);
+
 int validarEntero();

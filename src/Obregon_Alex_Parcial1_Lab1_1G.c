@@ -134,7 +134,7 @@ int main(void) {
 			case 8:
 				if(flagIngreso)
 				{
-					altaTrabajos(trabajos, TAM_TRABAJOS, &cantidadTrabajos, lista, servicios, &proximoIdTrabajo);
+					altaTrabajos(trabajos, TAM_TRABAJOS, &cantidadTrabajos, lista, servicios, TAM_SERVICIOS, &proximoIdTrabajo, TAM_MASCOTAS, tipos, TAM_TIPOS, colores, TAM_COLORES);
 				}
 				else
 				{
@@ -146,7 +146,7 @@ int main(void) {
 			case 9:
 				if(flagIngreso)
 				{
-
+					listarTrabajos(trabajos, cantidadTrabajos, lista, TAM_MASCOTAS, servicios, TAM_SERVICIOS);
 				}
 				else
 				{
